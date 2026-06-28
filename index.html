@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVES Institute | Coming Soon</title>
+  <meta name="description" content="AVES Institute — Live CA coaching built on clarity and strong foundations. Something big is coming.">
+  <style>
+    :root {
+      --navy: #08254b;
+      --navy-deep: #04152c;
+      --green: #58a519;
+      --green-bright: #84c829;
+      --gold: #ffcb21;
+      --ivory: #f6f3ee;
+      --ink: #102033;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+    }
+
+    body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: var(--navy-deep);
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ambient glow blobs */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      border-radius: 999px;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    body::before {
+      width: 55vw; height: 55vw;
+      top: -20vw; right: -15vw;
+      background: radial-gradient(circle, rgba(8,37,75,0.9) 0%, transparent 70%);
+    }
+    body::after {
+      width: 45vw; height: 45vw;
+      bottom: -15vw; left: -10vw;
+      background: radial-gradient(circle, rgba(88,165,25,0.28) 0%, transparent 70%);
+    }
+
+    /* faint grid texture */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(960px, calc(100% - 2rem));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      padding: 2.5rem 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 2rem));
+      display: grid;
+      gap: 1.3rem;
+      padding-bottom: 2rem;
+    }
+
+    /* ── LEFT COLUMN ── */
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .brand img {
+      width: clamp(3.5rem, 6vw, 5rem);
+      border-radius: 0.75rem;
+    }
+
+    .brand-name {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 700;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid rgba(88,165,25,0.35);
+      background: rgba(88,165,25,0.1);
+      color: var(--green-bright);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14rem;
+      width: fit-content;
+    }
+
+    .status-pill .dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: var(--green-bright);
+      box-shadow: 0 0 0 5px rgba(132,200,41,0.2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(132,200,41,0.2); }
+      50% { box-shadow: 0 0 0 8px rgba(132,200,41,0.08); }
+    }
+
+    h1 {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    h1 .accent {
+      display: block;
+      background: linear-gradient(120deg, var(--green) 0%, var(--green-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      max-width: 30rem;
+    }
+
+    .divider {
+      width: 2.5rem;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--green-bright));
+    }
+
+    .subject-badge {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 1rem 1.3rem;
+      border-radius: 1.1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      width: fit-content;
+    }
+
+    .subject-badge .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15rem;
+      color: var(--green-bright);
+      font-weight: 700;
+    }
+
+    .subject-badge .name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.95rem 1.6rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      font-family: inherit;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-bright) 100%);
+      color: #fff;
+      box-shadow: 0 14px 32px rgba(88,165,25,0.3);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ── RIGHT COLUMN ── */
+    .right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .poster-frame {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 2rem;
+      padding: 0.75rem;
+      background: linear-gradient(155deg, rgba(255,255,255,0.1) 0%, rgba(88,165,25,0.15) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+
+    .poster-frame img {
+      width: 100%;
+      border-radius: 1.4rem;
+      display: block;
+    }
+
+    .float-card {
+      position: absolute;
+      left: -1.5rem;
+      bottom: 2rem;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 1.2rem;
+      padding: 1rem 1.3rem;
+      max-width: 200px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    .float-card .fc-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12rem;
+      color: var(--green-bright);
+      font-weight: 700;
+    }
+
+    .float-card .fc-value {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: 1.7rem;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #fff;
+      margin-top: 0.25rem;
+    }
+
+    .float-card .fc-sub {
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.4;
+    }
+
+    .section-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 1.7rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.22);
+    }
+
+    .section-card h2 {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 0.75rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16rem;
+      color: var(--green-bright);
+      font-weight: 700;
+    }
+
+    .section-copy {
+      margin-top: 0.9rem;
+      max-width: 42rem;
+      color: rgba(255,255,255,0.64);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .info-grid,
+    .detail-grid,
+    .cta-grid {
+      display: grid;
+      gap: 1.1rem;
+      margin-top: 1.3rem;
+    }
+
+    .info-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .detail-grid,
+    .cta-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .info-tile,
+    .detail-panel,
+    .cta-panel {
+      border-radius: 1.25rem;
+      padding: 1.15rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-tile strong,
+    .detail-panel strong {
+      display: block;
+      color: #fff;
+      font-size: 1.15rem;
+    }
+
+    .info-tile span,
+    .detail-panel p,
+    .cta-panel p,
+    .faculty-meta,
+    .date-card span {
+      display: block;
+      margin-top: 0.45rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.55;
+    }
+
+    .detail-panel h3,
+    .cta-panel h3,
+    .faculty-card h3 {
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: 1.75rem;
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .list {
+      list-style: none;
+      margin-top: 1rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .list li {
+      display: flex;
+      gap: 0.75rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .list li::before {
+      content: "•";
+      color: var(--green-bright);
+      font-size: 1.2rem;
+      line-height: 1;
+      margin-top: 0.1rem;
+    }
+
+    .date-card {
+      padding: 1.15rem;
+      border-radius: 1.2rem;
+      background: linear-gradient(135deg, rgba(88,165,25,0.18) 0%, rgba(255,255,255,0.06) 100%);
+      border: 1px solid rgba(132,200,41,0.2);
+    }
+
+    .date-card strong {
+      display: block;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      font-size: 2.1rem;
+      line-height: 0.95;
+      color: #fff;
+    }
+
+    .faculty-card {
+      display: grid;
+      gap: 1rem;
+      align-content: start;
+      border-radius: 1.25rem;
+      padding: 1.2rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .faculty-badge {
+      display: inline-block;
+      width: fit-content;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(88,165,25,0.14);
+      color: var(--green-bright);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12rem;
+    }
+
+    .cta-panel.primary {
+      background: linear-gradient(155deg, rgba(88,165,25,0.22) 0%, rgba(255,255,255,0.06) 100%);
+      border-color: rgba(132,200,41,0.22);
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: relative;
+      z-index: 1;
+      padding: 1.5rem 0 1.8rem;
+      text-align: center;
+      color: rgba(255,255,255,0.25);
+      font-size: 0.82rem;
+      letter-spacing: 0.05rem;
+      width: 100%;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .page {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 3rem 0 2rem;
+      }
+
+      .content,
+      .info-grid,
+      .detail-grid,
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .right {
+        align-items: center;
+        order: -1;
+      }
+
+      .poster-frame {
+        max-width: 280px;
+      }
+
+      .float-card {
+        position: static;
+        margin-top: 1rem;
+        max-width: none;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: clamp(3.8rem, 22vw, 5.5rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-overlay"></div>
+
+  <main class="page">
+    <div class="left">
+      <div class="brand">
+        <img src="./aveslogo.jpeg" alt="AVES Institute logo">
+        <span class="brand-name">AVES Institute</span>
+      </div>
+
+      <div class="status-pill">
+        <span class="dot"></span>
+        Something big is coming
+      </div>
+
+      <h1>
+        Coming
+        <span class="accent">Soon.</span>
+      </h1>
+
+      <div class="divider"></div>
+
+      <p class="tagline">
+        AVES Institute is building a home for CA aspirants who want real concept clarity,
+        live guidance, and exam-ready preparation — starting from the basics.
+      </p>
+
+      <div class="subject-badge">
+        <span class="label">First batch launching</span>
+        <span class="name">CA Inter — Auditing &amp; Assurance</span>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="https://wa.me/918848443559">
+          Get notified on WhatsApp
+        </a>
+        <a class="btn btn-ghost" href="tel:+918848443559">
+          +91 88484 43559
+        </a>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="poster-frame">
+        <img src="./avesposter.jpeg" alt="AVES Institute free live class poster">
+      </div>
+      <div class="float-card">
+        <span class="fc-label">Live &amp; Free</span>
+        <div class="fc-value">Join Early</div>
+        <span class="fc-sub">Be the first to know when classes go live.</span>
+      </div>
+    </div>
+  </main>
+
+  <section class="content">
+    <article class="section-card">
+      <span class="section-kicker">Class Snapshot</span>
+      <h2>Everything the poster promises, organized clearly</h2>
+      <p class="section-copy">
+        This featured AVES session is built as a free live online class for CA Inter students who want
+        better fundamentals in Group 2, Paper 5: Auditing and Assurance. It is designed to make the
+        basics easier to understand and more useful in actual exam preparation.
+      </p>
+      <div class="info-grid">
+        <div class="info-tile">
+          <strong>Free Live Class</strong>
+          <span>No-cost entry session for students who want to experience the AVES teaching approach.</span>
+        </div>
+        <div class="info-tile">
+          <strong>Online Format</strong>
+          <span>Attend from anywhere with a focused live classroom environment and guided explanations.</span>
+        </div>
+        <div class="info-tile">
+          <strong>10-Day Learning Window</strong>
+          <span>A compact structure created to help students build momentum without losing continuity.</span>
+        </div>
+        <div class="info-tile">
+          <strong>Evening Timing</strong>
+          <span>Scheduled from 7:00 PM to 9:00 PM to fit comfortably into a serious study routine.</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="detail-grid">
+      <article class="section-card">
+        <span class="section-kicker">What Students Gain</span>
+        <h2>Built for basics, clarity, and confidence</h2>
+        <p class="section-copy">
+          The poster highlights exactly what many CA students need most at the start of auditing:
+          not more pressure, but cleaner explanations, better sequencing, and a stronger conceptual base.
+        </p>
+        <ul class="list">
+          <li>Covering all the basic elements of auditing before the subject starts feeling heavy.</li>
+          <li>Perfect for concept clarity and exam preparation when students want understanding, not memorization alone.</li>
+          <li>Learn from the basics step by step, especially useful for students who feel the subject is still shaky.</li>
+          <li>Suitable as both a first exposure to the paper and a reset for students who want a more structured approach.</li>
+        </ul>
+      </article>
+
+      <aside class="section-card">
+        <span class="section-kicker">Dates &amp; Timing</span>
+        <h2>Short, focused, and time-bound</h2>
+        <div class="info-grid" style="grid-template-columns: 1fr; margin-top: 1rem;">
+          <div class="date-card">
+            <strong>From July 6th to July 17th</strong>
+            <span>Ten teaching days designed to create a strong start in auditing and ethics-related understanding.</span>
+          </div>
+          <div class="date-card">
+            <strong>7:00 PM to 9:00 PM</strong>
+            <span>Evening class hours that align well with regular study plans and revision schedules.</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="detail-grid">
+      <article class="section-card faculty-card">
+        <span class="faculty-badge">Faculty Spotlight</span>
+        <h3>Aiswarya Jose</h3>
+        <span class="faculty-meta">
+          Faculty, AVES Institute. Featured on the campaign poster as the lead voice for this foundational
+          live class on Basics of Auditing &amp; Ethics.
+        </span>
+        <p>
+          This session is positioned around a concept-first teaching style: simplify the subject, connect it
+          to what the paper expects, and help students move from confusion toward clarity in a guided format.
+        </p>
+      </article>
+
+      <article class="section-card">
+        <span class="section-kicker">Why This Matters</span>
+        <h2>A stronger start changes the rest of the preparation</h2>
+        <p class="section-copy">
+          Auditing often becomes difficult when students rush into advanced preparation without locking in the
+          basics. AVES uses this free session as a foundation-building entry point so the later study journey
+          feels more stable, more logical, and much easier to revise.
+        </p>
+      </article>
+    </div>
+
+    <div class="cta-grid">
+      <article class="section-card cta-panel primary">
+        <span class="section-kicker">Join the Campaign</span>
+        <h3>Reserve your place in the free live class</h3>
+        <p>
+          Use the poster contact number to ask for joining details, enrollment instructions, or upcoming class updates.
+        </p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="https://wa.me/918848443559">Chat on WhatsApp</a>
+          <a class="btn btn-ghost" href="tel:+918848443559">Call +91 88484 43559</a>
+        </div>
+      </article>
+
+      <article class="section-card cta-panel">
+        <span class="section-kicker">AVES Message</span>
+        <h3>Let’s build strong foundations for your success</h3>
+        <p>
+          That line from the poster works well as the promise behind the brand: focused support, clearer learning,
+          and the kind of foundational teaching that helps students feel ready for the bigger exam journey ahead.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    &copy; 2025 AVES Institute &nbsp;·&nbsp; avesinstitute.com
+  </footer>
+</body>
+</html>
